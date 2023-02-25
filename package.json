@@ -19,7 +19,6 @@
   "homepage": "https://github.com/KarimZakka01/ReChill-Backend#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "mongo": "^0.1.0",
     "mongoose": "^6.10.0"
   }
 }
