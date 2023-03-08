@@ -4,17 +4,10 @@ const db = require("../../../utils/connection");
 const handler = async (event) => {
   try {
     db.connect();
-    const subject = event.queryStringParameters.name || 'World'
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: `Hello ${subject}` }),
-      // // more keys you can return:
-      // headers: { "headerName": "headerValue", ... },
-      // isBase64Encoded: true,
-    }
+    return { statusCode: 200, body: "asdasd" };
   } catch (error) {
-    return { statusCode: 500, body: error.toString() }
+    return { statusCode: 500, body: error.toString() };
   }
-}
+};
 
-module.exports = { handler }
+module.exports = { handler };
