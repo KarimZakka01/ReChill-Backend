@@ -26,10 +26,19 @@ const TherapySessionSchema = new mongoose.Schema({
   location: "String",
 });
 
-const YoutubeVideoSchema = new mongoose.Schema({
-  id: "ObjectId",
-  dayNumber: "Number",
-  url: "string",
+const YoutubeVideoSchema = new mongoose.Schema(
+  {
+    id: "ObjectId",
+    dayNumber: "Number",
+    url: "string",
+  },
+  { timestamps: true }
+);
+
+const MedicalCenterSchema = new mongoose.Schema({
+  location: "string",
+  address: "string",
+  distance: "Number",
 });
 
 module.exports = {
@@ -37,4 +46,5 @@ module.exports = {
   TherapySessionSchema,
   PersonalityTestSchema,
   UserSchema,
+  MedicalCenterSchema,
 };
