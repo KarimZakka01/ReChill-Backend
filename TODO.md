@@ -3,17 +3,20 @@
 - [x] Move MongoDB connection URL to environment variable
 - [x] Login Endpoint (research)
 - [x] Medical Center Endpoint (research)
+- [ ] Contact Us Endpoint
+- [ ] User edits profile info
 - [ ] Add validations to SignUp
 - [ ] Encrypt passwords
 - [ ] Add validations to LogIn
 - [ ] Check password equality without decryption
 - [ ] Add Encryption key to environment variables
 - [ ] Integrate Youtube Data API
-- [ ] Schdeule therapy sessions
+- [ ] Schedule therapy sessions
 - [ ] Get therapy sessions for user/therapist
 - [ ] Personality Test
 - [ ] Therapy Session Endpoint
 - [ ] Personality Test Endpoint
+- [ ] Contact Us Endpoint
 - [ ] ChatBot (research)
 - [ ] Game Endpoint (research)
 - [ ] Netlify config (research)
