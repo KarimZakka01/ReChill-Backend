@@ -59,27 +59,23 @@ const QuestionSchema = new mongoose.Schema({
 });
 
 const AnswerSchema = new mongoose.Schema({
-  email: "string", // The email of the user who submitted the answer
+  email: "string",
+  // An array of answer choices for the user
   answers: [
     {
+      // The ID of the question being answered
       questionId: {
-        type: mongoose.Schema.Types.ObjectId, // this will get the id created by mongoose for a document in the Question schema
-        ref: "Question", // specify the name of the model that a field should reference (in models file)
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Question",
       },
-
-      choice: {
-        value: "Number", // value of the selected answer choice (used to calculate to get personality)
-      },
+      // The value of the selected answer choice
+      choice: "Number",
     },
   ],
 
-  personalityScore: {
-    value: "Number",
-  },
+  personalityScore: "Number",
   //The user's assigned personality adjective
-  personalityAdjective: {
-    adjective: "String",
-  },
+  personalityAdjective: "String",
 });
 
 module.exports = {
