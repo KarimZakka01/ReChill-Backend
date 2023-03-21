@@ -6,7 +6,7 @@ async function connect() {
   let connection = await mongoose.connect(process.env.MONGO_URL, {
     dbName: "rechill",
   });
-  createDb(connection);
+  //createDb(connection);
   mongoose.set("strictQuery", true);
   return connection;
 }

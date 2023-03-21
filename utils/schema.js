@@ -20,7 +20,14 @@ const PersonalityTestSchema = new mongoose.Schema({
 
 const TherapySessionSchema = new mongoose.Schema({
   id: "ObjectId",
-  userId: "ObjectId",
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  therapistId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   date: "Date",
   time: "Number",
   location: "String",
