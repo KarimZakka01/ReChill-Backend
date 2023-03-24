@@ -3,7 +3,9 @@ const { User } = require("../../../utils/models");
 
 async function editProfile(event) {
   // Parse the request body as JSON and extract the user ID
-  const { userId, ...userData } = JSON.parse(event.body);
+  // Parse the request body as JSON and extract the user ID and data
+  const { userId, firstName, lastName, dob, phoneNumber, location, email } =
+    JSON.parse(event.body);
 
   await db.connect();
 
@@ -19,12 +21,12 @@ async function editProfile(event) {
     }
 
     // Update the user's data with the new values (except password, gender, and userType)
-    user.firstName = userData.firstName ?? user.firstName;
-    user.lastName = userData.lastName ?? user.lastName;
-    user.dob = userData.dob ?? user.dob;
-    user.phoneNumber = userData.phoneNumber ?? user.phoneNumber;
-    user.location = userData.location ?? user.location;
-    user.email = userData.email ?? user.email;
+    user.firstName = firstName ?? user.firstName;
+    user.lastName = lastName ?? user.lastName;
+    user.dob = dob ?? user.dob;
+    user.phoneNumber = phoneNumber ?? user.phoneNumber;
+    user.location = location ?? user.location;
+    user.email = email ?? user.email;
 
     // Save the updated user data to the database
     await user.save();
