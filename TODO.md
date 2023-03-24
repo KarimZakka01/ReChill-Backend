@@ -29,3 +29,8 @@
 - [ ] dependencies (copybook)
 - [ ] Zustand - state management(copybook)
 - [ ] Tailwind (css)
+
+- [ ] Why if I have folder with name x, and in it a file y.js (DIFFERENT NAMES) it doesn't run?
+- [ ] dob format in edit profile returning time?
+- [ ] Why in lohin and signup we didn't specify type of http request? shouldnt they be POST?
+- [ ] Tailwind (css)
