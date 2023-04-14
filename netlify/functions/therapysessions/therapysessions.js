@@ -211,7 +211,7 @@ exports.handler = async function (event, context) {
 
     default:
       return {
-        statusCode: 400,
+        statusCode: 405,
         body: JSON.stringify({ message: "Unsupported Method Function" }),
       };
   }
