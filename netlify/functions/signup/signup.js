@@ -5,6 +5,7 @@ exports.handler = async function (event, context) {
   const requestBody = JSON.parse(event.body);
   await db.connect();
   const user = await User.findOne({ email: requestBody.email }); // Find a user in the database with the given email
+  console.log(user);
   if (user) {
     // If a user is found, return a 401 Unauthorized response
     return {
