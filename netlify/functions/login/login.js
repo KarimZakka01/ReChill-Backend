@@ -1,5 +1,6 @@
 const db = require("../../../utils/connection");
 const { User } = require("../../../utils/models");
+const jwt = require('jsonwebtoken');
 
 
 exports.handler = async function (event, context) {
@@ -12,7 +13,6 @@ exports.handler = async function (event, context) {
 
     // Find a user in the database with the given email
     const user = await User.findOne({ email, password});
-    console.log(user);
     // If no user is found or the email or password does not match, return a 401 Unauthorized response
     if (!user || email !== user.email || password !== user.password) {
       return {
@@ -20,10 +20,14 @@ exports.handler = async function (event, context) {
         body: "Wrong email or password!"
       };
     }
-
+    let sessionId = jwt.sign({sub: user._id.toString()}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRY});
     // If the user is found and the email and password match, return a 200 OK response indicating success
+    console.log(sessionId);
     return {
       statusCode: 200,
+      Headers: {
+        'Set-Cookie': `session_token:${sessionId}; Secure; HttpOnly; SameSite:Lax; Path=/`
+      },
       body: "User logged in",
     };
   } catch (error) {

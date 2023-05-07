@@ -22,6 +22,7 @@
   "homepage": "https://github.com/KarimZakka01/ReChill-Backend#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.10.0"
   }
 }

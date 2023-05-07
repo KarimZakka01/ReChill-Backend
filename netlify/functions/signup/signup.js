@@ -10,12 +10,12 @@ exports.handler = async function (event, context) {
     // If a user is found, return a 401 Unauthorized response
     return {
       statusCode: 401,
-      body: JSON.stringify({ message: "User already exists!" }),
+      body: "User already exists!"
     };
   }
   // If no user is found, create a new User instance with the request body
   const newUser = new User(requestBody);
-
+  
   // Save the new user to the database
   await newUser.save();
 
