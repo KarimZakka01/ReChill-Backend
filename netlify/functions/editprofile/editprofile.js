@@ -1,7 +1,22 @@
 const db = require("../../../utils/connection");
 const { User } = require("../../../utils/models");
+import tokenValidation from "../../../utils/tokenValidation";
 
 async function editProfile(event) {
+  try {
+    let timeout = {
+      statusCode: 440,
+      body: "Session timed out"
+    };
+    let sessionId = event.multiValueHeaders?.cookie[0].split('session_token=')[1];
+    let isValid = tokenValidation(sessionId);
+    if(!isValid){
+      return timeout;
+    } 
+  } catch (error) {
+      return timeout;
+  }
+  
   // Parse the request body as JSON and extract the user ID
   // Parse the request body as JSON and extract the user ID and data
   const { userId, firstName, lastName, dob, phoneNumber, location, email } =

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 exports.handler = async function (event, context) {
-  
+
   try {
     // Parse the request body as JSON and extract the email and password properties
     const { email, password } = JSON.parse(event.body);
@@ -22,13 +22,16 @@ exports.handler = async function (event, context) {
     }
     let sessionId = jwt.sign({sub: user._id.toString()}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRY});
     // If the user is found and the email and password match, return a 200 OK response indicating success
-    console.log(sessionId);
     return {
       statusCode: 200,
-      Headers: {
-        'Set-Cookie': `session_token:${sessionId}; Secure; HttpOnly; SameSite:Lax; Path=/`
+      headers: {
+        'Set-Cookie': `session_token=${sessionId}; Secure; HttpOnly=false; SameSite=none; Path=/`
       },
-      body: "User logged in",
+      body: JSON.stringify({
+        message: "User logged in",
+        token: sessionId,
+        userInfo: user
+      })
     };
   } catch (error) {
     console.error(error);
