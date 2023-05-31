@@ -19,7 +19,7 @@ async function bookSession(event) {
       };
     }
 
-    if (user.userType !== "user") {
+    if (user.userType !== "Standard") {
       // If user is not a regular user, return 403 error
       return {
         statusCode: 403, //client is forbidden from accessing a valid URL
@@ -74,7 +74,7 @@ async function deleteSession(event) {
     const { userId, userType, id } = JSON.parse(event.body);
 
     // If the userType is user
-    if (userType === "user") {
+    if (userType === "Standard") {
       // Find ession  id (_id)
       const session = await TherapySession.findById(id);
 
@@ -99,7 +99,7 @@ async function deleteSession(event) {
       return { statusCode: 200, body: "Session deleted successfully" };
     }
     // If the user Type is therapist
-    else if (userType === "therapist") {
+    else if (userType === "Therapist") {
       // Find the session by id
       const session = await TherapySession.findById(id);
 
@@ -112,7 +112,7 @@ async function deleteSession(event) {
       const therapist = await User.findById(userId);
 
       // If the user with userId isn't a therapist
-      if (therapist.userType !== "therapist") {
+      if (therapist.userType !== "Therapist") {
         return {
           statusCode: 403, //client is forbidden from accessing a valid URL
           body: "You are not authorized to perform this action since you are not a therapist",
@@ -151,7 +151,7 @@ async function getSessions(event) {
     const { userId, userType } = JSON.parse(event.body);
 
     //if the userType is user
-    if (userType === "user") {
+    if (userType === "Standard") {
       //find all sessions where the userId matches
       const sessions = await TherapySession.find({ userId });
 
@@ -162,12 +162,12 @@ async function getSessions(event) {
       };
     }
     //If the userType is therapist
-    else if (userType === "therapist") {
+    else if (userType === "Therapist") {
       // Find the therapist by userId
       const therapist = await User.findById(userId);
 
       // If the user with userId is not a therapist, return 403 error
-      if (therapist.userType !== "therapist") {
+      if (therapist.userType !== "Therapist") {
         return {
           statusCode: 403, //client is forbidden from accessing a valid URL
           body: "You are not authorized to perform this action",
@@ -188,7 +188,7 @@ async function getSessions(event) {
     else {
       return {
         statusCode: 400, //client error
-        body: "Invalid userType. Allowed values: user, therapist",
+        body: "Invalid userType. Allowed values: Standard, Therapist",
       };
     }
   } catch (error) {
