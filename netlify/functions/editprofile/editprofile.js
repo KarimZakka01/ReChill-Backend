@@ -1,29 +1,29 @@
 const db = require("../../../utils/connection");
 const { User } = require("../../../utils/models");
-const  tokenValidation = require("../../../utils/tokenValidation");
+const tokenValidation = require("../../../utils/tokenValidation");
 
 exports.handler = async function editProfile(event) {
-  
   try {
     await db.connect();
 
-    let sessionId = event.multiValueHeaders?.cookie[0].split('session_token=')[1];
+    let sessionId =
+      event.multiValueHeaders?.cookie[0].split("session_token=")[1];
     let isValid = tokenValidation(sessionId);
-    if(!isValid){
+    if (!isValid) {
       return {
         statusCode: 440,
-        body: "Session timed out!"
+        body: "Session timed out!",
       };
-    } 
+    }
   } catch (error) {
     return {
       statusCode: 500,
-      body: "Server error!"
+      body: "Server error!",
     };
   }
 
   await db.connect();
-  
+
   let userInfo = JSON.parse(event.body).formValues;
   console.log(userInfo);
   let email = userInfo.email;
@@ -31,26 +31,26 @@ exports.handler = async function editProfile(event) {
 
   try {
     // Find the user by ID
-    const user = await User.findOne({ email, password});
+    const user = await User.findOne({ email, password });
 
     if (!user) {
       return {
         statusCode: 404,
-        body: "Password is incorrect"
+        body: "Password is incorrect",
       };
     }
 
-    if(userInfo.newPassword !== userInfo.confirmNewPassword){
+    if (userInfo.newPassword !== userInfo.confirmNewPassword) {
       return {
         statusCode: 404,
-        body: "Invalid new password, they must be identical."
+        body: "Invalid new password, they must be identical.",
       };
     }
 
     user.phoneNumber = userInfo.phoneNumber;
     user.location = userInfo.location;
     user.email = userInfo.email;
-    user.password = userInfo.password;
+    user.password = userInfo.newPassword;
 
     // Save the updated user data to the database
     await user.save();
@@ -60,8 +60,8 @@ exports.handler = async function editProfile(event) {
       statusCode: 200,
       body: JSON.stringify({
         message: "Profile updated successfully",
-        userInfo: user
-      })
+        userInfo: user,
+      }),
     };
   } catch (error) {
     // Return an error response if there was an error updating the user data
@@ -70,4 +70,4 @@ exports.handler = async function editProfile(event) {
       body: JSON.stringify({ message: "Error updating user data", error }),
     };
   }
-}
+};
