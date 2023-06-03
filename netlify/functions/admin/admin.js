@@ -46,7 +46,6 @@ async function addTherapist(event) {
 async function deleteTherapist(event) {
   try {
     const { therapistId } = JSON.parse(event.body);
-
     // Find the therapist by their ID and delete
     await User.findByIdAndDelete(therapistId);
 
@@ -65,7 +64,7 @@ async function deleteTherapist(event) {
 async function editTherapist(event) {
   try {
     const {
-      therapistId,
+      _id,
       firstName,
       lastName,
       dob,
@@ -75,9 +74,8 @@ async function editTherapist(event) {
       email,
       password,
     } = JSON.parse(event.body);
-
     // Find the therapist by their ID
-    const therapist = await User.findById(therapistId);
+    const therapist = await User.findById(_id);
 
     if (!therapist) {
       return {
@@ -127,7 +125,7 @@ async function viewAllTherapists(event) {
 }
 exports.handler = async function (event, context) {
   await db.connect();
-
+  console.log(event.httpMethod);
   switch (event.httpMethod) {
     case "POST":
       return await addTherapist(event);
@@ -140,11 +138,11 @@ exports.handler = async function (event, context) {
 
     case "PUT":
       return await editTherapist(event);
-
-    default:
-      return {
-        statusCode: 405,
-        body: JSON.stringify({ message: "Unsupported Method Function" }),
-      };
-  }
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: "Profile updated successfully"
+      }),
+    };
 };

@@ -26,11 +26,14 @@ async function postUserAnswers(event) {
     const personalityScore = calculatePersonalityScore(answers); // Calculate the user's personality score based on their answers
 
     const personalityAdjective = assignPersonalityAdjective(personalityScore); // Assign a personality adjective based on the user's personality score
-
+    let updatedAnswers = [];
+    answers.forEach(element => {
+      updatedAnswers.push({"choice": element})
+    });
     const answer = new Answer({
       // Create a new Answer object with the user's email, answers, personality score, and personality adjective
       email,
-      answers,
+      updatedAnswers,
       personalityScore,
       personalityAdjective,
     });
@@ -38,7 +41,7 @@ async function postUserAnswers(event) {
     await answer.save(); // Save the new answer object to the Answers collection in the database
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Answers saved successfully" }), // Return a success message as a JSON string in the response body
+      body: JSON.stringify({ message: "Answers saved successfully" , 'personalityAdjective': personalityAdjective}), // Return a success message as a JSON string in the response body
     };
   } catch (error) {
     return {
@@ -88,13 +91,13 @@ exports.handler = async function (event, context) {
 
     case "POST":
       return await postUserAnswers(event);
-
-    default:
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: "Unsupported Method Function" }),
-      };
   }
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: "Cors successful"
+    }),
+  };
 };
 
 function calculatePersonalityScore(answers) {
