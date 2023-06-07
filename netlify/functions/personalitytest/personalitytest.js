@@ -27,8 +27,8 @@ async function postUserAnswers(event) {
 
     const personalityAdjective = assignPersonalityAdjective(personalityScore); // Assign a personality adjective based on the user's personality score
     let updatedAnswers = [];
-    answers.forEach(element => {
-      updatedAnswers.push({"choice": element})
+    answers.forEach((element) => {
+      updatedAnswers.push({ choice: element });
     });
     const answer = new Answer({
       // Create a new Answer object with the user's email, answers, personality score, and personality adjective
@@ -41,7 +41,10 @@ async function postUserAnswers(event) {
     await answer.save(); // Save the new answer object to the Answers collection in the database
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Answers saved successfully" , 'personalityAdjective': personalityAdjective}), // Return a success message as a JSON string in the response body
+      body: JSON.stringify({
+        message: "Answers saved successfully",
+        personalityAdjective: personalityAdjective,
+      }), // Return a success message as a JSON string in the response body
     };
   } catch (error) {
     return {
@@ -95,7 +98,7 @@ exports.handler = async function (event, context) {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: "Cors successful"
+      message: "Cors successful",
     }),
   };
 };
@@ -119,6 +122,9 @@ function assignPersonalityAdjective(personalityScore) {
     "intelligent",
     "passionate",
     "resilient",
+    "brave",
+    "extrovert",
+    "loving",
   ];
   const randomIndex = Math.floor(Math.random() * adjectives.length - 1);
   return adjectives[randomIndex];

@@ -25,6 +25,7 @@ async function addTherapist(event) {
       phoneNumber,
       location,
       email,
+      url,
       password,
       userType: "Therapist",
     });
@@ -71,6 +72,7 @@ async function editTherapist(event) {
       gender,
       phoneNumber,
       location,
+      url,
       email,
       password,
     } = JSON.parse(event.body);
@@ -91,6 +93,7 @@ async function editTherapist(event) {
     therapist.gender = gender;
     therapist.phoneNumber = phoneNumber;
     therapist.location = location;
+    therapist.url = url;
     therapist.email = email;
     therapist.password = password;
 
@@ -138,11 +141,11 @@ exports.handler = async function (event, context) {
 
     case "PUT":
       return await editTherapist(event);
-    }
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Profile updated successfully"
-      }),
-    };
+  }
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: "Profile updated successfully",
+    }),
+  };
 };

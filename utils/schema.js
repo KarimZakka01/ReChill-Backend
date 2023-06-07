@@ -39,6 +39,7 @@ const YoutubeVideoSchema = new mongoose.Schema(
     id: "ObjectId",
     dayNumber: "Number",
     url: "string",
+    text: "string",
   },
   { timestamps: true }
 );
