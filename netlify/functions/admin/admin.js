@@ -16,7 +16,7 @@ async function addTherapist(event) {
       password,
     } = JSON.parse(event.body);
 
-    // Create a new therapist object
+    // Create a new therapist objectdas
     const therapist = new User({
       firstName,
       lastName,
